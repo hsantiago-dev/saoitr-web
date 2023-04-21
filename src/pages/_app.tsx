@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Ubuntu as Sans, Ubuntu_Mono as Mono } from '@next/font/google'
+import { Ubuntu as Sans, Ubuntu_Mono as Mono } from 'next/font/google'
 
 const sans = Sans({
   subsets: ['latin'],
