@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Link from "next/link";
+import { UserContext } from "@/context/user.provider";
+import { useContext } from "react";
+import { User } from "@/core/entities/user";
+import { useRouter } from "next/router";
 
 const schema = yup
   .object()
@@ -16,6 +20,21 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors }, } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
+  const signIn = (data: any) => {
+    const user = new User({
+      id: 1,
+      name: "Henrick Santiago",
+      email: data.email,
+    });
+
+    userContext.setUser(user);
+
+    router.push("/");
+  }
   
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-grey-900 p-24">
@@ -24,7 +43,7 @@ export default function Login() {
           Bem vindo de volta!
         </h1>
         <div className="flex flex-col rounded-xl bg-grey-700 px-5 py-6">
-          <form onSubmit={handleSubmit((d) => console.log(d))}
+          <form onSubmit={handleSubmit((data) => signIn(data))}
             className="flex flex-col space-y-6"
           >
             <Input title="E-mail" type="email" register={register('email')} error={errors.email?.message as string | undefined}/>

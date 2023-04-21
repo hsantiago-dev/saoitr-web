@@ -114,9 +114,9 @@
   dependencies:
     "glob" "7.1.7"
 
-"@next/font@^13.3.0":
+"next/font@^13.3.0":
   "integrity" "sha512-xUv7VRUA2Zr6n/KJDILyv7/zGy9xKUsyQURaQqYr7lVxn0REScazwyZQzhSm+DnJoUyo+9DcFs2J3WsZXHUvQw=="
-  "resolved" "https://registry.npmjs.org/@next/font/-/font-13.3.0.tgz"
+  "resolved" "https://registry.npmjs.org/next/font/-/font-13.3.0.tgz"
   "version" "13.3.0"
 
 "@next/swc-win32-x64-msvc@13.3.0":
