@@ -7,16 +7,17 @@ interface InputProps {
 
 export default function Input({title, type, register, error}: InputProps) {
     return (
-        <div className="flex flex-col space-y-3">
-            <label htmlFor="email" className="font-mono text-white ml-1">
+        <div className="flex flex-col space-y-2">
+            <label className="font-sans text-white">
                 {title}
             </label>
             <input
                 type={type}
+                
                 {...register}
-                className="rounded-xl bg-teal-800 px-4 py-2 font-sans font-semibold shadow hover:bg-emerald-500"
+                className="rounded-lg bg-grey-900 px-4 py-2 font-sans font-medium shadow hover:bg-grey-800"
             />
-            {error && <p className="text-red-400 ml-1">{error as string}</p>}
+            {error && <p className="text-red ml-1">{error as string}</p>}
         </div>
     );
 }
