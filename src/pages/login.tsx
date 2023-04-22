@@ -7,6 +7,10 @@ import { UserContext } from "@/context/user.provider";
 import { useContext } from "react";
 import { User } from "@/@core/domain/entities/user";
 import { useRouter } from "next/router";
+import { SignInUseCase } from "@/@core/app/sign-in.usecase";
+import { UserHttpGateway } from "@/@core/infra/gateways/user-http.gateway";
+
+import { http } from "@/@core/infra/http";
 
 const schema = yup
   .object()
@@ -24,14 +28,15 @@ export default function Login() {
   const userContext = useContext(UserContext);
   const router = useRouter();
 
-  const signIn = (data: any) => {
-    const user = new User({
-      id: 1,
-      name: "Henrick Santiago",
-      email: data.email,
-    });
+  const signIn = async (data: any) => {
 
-    userContext.setUser(user);
+    const gateway = new UserHttpGateway(http);
+    const useCase = new SignInUseCase(gateway);
+    const result = await useCase.execute(data.email, data.password);
+
+    console.log(result);
+
+    userContext.setUser(result);
 
     router.push("/");
   }
