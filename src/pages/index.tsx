@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import { Occurrence } from "@/core/entities/occurrence";
+import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { OccurrenceInMemoryRepository } from "@/data/in-memory/occurrence-in-memory.gateway";
 import { useState, } from "react";
 

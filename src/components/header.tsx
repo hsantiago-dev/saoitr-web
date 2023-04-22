@@ -1,5 +1,5 @@
 import { UserContext } from "@/context/user.provider";
-import { User } from "@/core/entities/user";
+import { User } from "@/@core/domain/entities/user";
 import Link from "next/link";
 import { useContext } from "react";
 

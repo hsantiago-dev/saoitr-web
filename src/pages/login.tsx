@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import Link from "next/link";
 import { UserContext } from "@/context/user.provider";
 import { useContext } from "react";
-import { User } from "@/core/entities/user";
+import { User } from "@/@core/domain/entities/user";
 import { useRouter } from "next/router";
 
 const schema = yup

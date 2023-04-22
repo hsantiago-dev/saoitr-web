@@ -1,4 +1,4 @@
-import { User } from "@/core/entities/user";
+import { User } from "@/@core/domain/entities/user";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 export type UserContextType = {
@@ -19,7 +19,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     useEffect(() => {
 
         const user = localStorage.getItem("user") || '{}';
-        
+
         if (user !== '{}') 
             setUser(JSON.parse(user));
         else 

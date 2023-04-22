@@ -1,4 +1,4 @@
-import { Occurrence } from "@/core/entities/occurrence";
+import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { OccurrenceGateway } from "@/core/gateways/occurence.gateway";
 
 export class OccurrenceInMemoryRepository implements OccurrenceGateway { 
