@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { SignInUseCase } from "@/@core/app/sign-in.usecase";
 import { UserHttpGateway } from "@/@core/infra/gateways/user-http.gateway";
-import { showToastLoading, updateToastLoading } from '../@core/infra/toast'
+import { showToastLoading, updateToastLoading } from '../@core/infra/toast-notification'
 
 import { http } from "@/@core/infra/http";
 

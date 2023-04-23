@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Id, toast } from 'react-toastify';
 
 const TIME_TO_AUTOCLOSE = 3000; //ms
