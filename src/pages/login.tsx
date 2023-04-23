@@ -4,11 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Link from "next/link";
 import { UserContext } from "@/context/user.provider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { SignInUseCase } from "@/@core/app/sign-in.usecase";
 import { UserHttpGateway } from "@/@core/infra/gateways/user-http.gateway";
-import { showToastNotification } from '../@core/infra/toast'
+import { showToastLoading, updateToastLoading } from '../@core/infra/toast'
 
 import { http } from "@/@core/infra/http";
 
@@ -27,9 +27,12 @@ export default function Login() {
 
   const userContext = useContext(UserContext);
   const router = useRouter();
+  const [ loading, setLoading ] = useState<boolean>(false);
 
   const signIn = async (data: any) => {
 
+    setLoading(true);
+    showToastLoading('Realizando login...');
     const gateway = new UserHttpGateway(http);
     const useCase = new SignInUseCase(gateway);
 
@@ -41,10 +44,11 @@ export default function Login() {
       userContext.setUser(result);
 
       router.push("/");
-      showToastNotification('Login realizado com sucesso!', 'success');
+      updateToastLoading('Login realizado com sucesso!', 'success');
     } catch (error: any) {
-      console.log(error);
-      showToastNotification(error.message, 'error');
+      updateToastLoading(error.message, 'error');
+    } finally {
+      setLoading(false);
     }
   }
   
@@ -63,6 +67,7 @@ export default function Login() {
             <button
               type="submit" 
               className="rounded-lg bg-green px-4 py-4 font-sans font-bold w-full text-grey-900"
+              disabled={loading}
             >
               ENTRAR
             </button>

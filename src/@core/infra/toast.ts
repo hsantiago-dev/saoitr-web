@@ -1,6 +1,9 @@
-import { toast } from 'react-toastify';
+import { type } from 'os';
+import { Id, toast } from 'react-toastify';
 
-const TIME_TO_AUTOCLOSE = 4000; //ms
+const TIME_TO_AUTOCLOSE = 3000; //ms
+
+let toastId: Id | undefined;
 
 export function showToastNotification(message: string, type: 'error' | 'success' | 'info' | 'warning') {
     
@@ -17,7 +20,7 @@ export function showToastNotification(message: string, type: 'error' | 'success'
 
 function showToastError(message: string) {
 
-    toast.error('💀 ' + message, {
+    toast.error(message, {
         position: "bottom-right",
         autoClose: TIME_TO_AUTOCLOSE,
         hideProgressBar: false,
@@ -26,12 +29,11 @@ function showToastError(message: string) {
         draggable: false,
         progress: undefined,
         theme: "dark",
-        icon: false,
     });
 }
 
 function showToastSuccess(message: string) {
-    toast.success('😎 ' + message, {
+    toast.success(message, {
         position: "bottom-right",
         autoClose: TIME_TO_AUTOCLOSE,
         hideProgressBar: false,
@@ -40,12 +42,11 @@ function showToastSuccess(message: string) {
         draggable: false,
         progress: undefined,
         theme: "dark",
-        icon: false,
     });
 }
 
 function showToastInfo(message: string) {
-    toast.info('😉 ' + message, {
+    toast.info(message, {
         position: "bottom-right",
         autoClose: TIME_TO_AUTOCLOSE,
         hideProgressBar: false,
@@ -54,12 +55,11 @@ function showToastInfo(message: string) {
         draggable: false,
         progress: undefined,
         theme: "dark",
-        icon: false,
     });
 }
 
 function showToastWarning(message: string) {
-    toast.warning('😥 ' + message, {
+    toast.warning(message, {
         position: "bottom-right",
         autoClose: TIME_TO_AUTOCLOSE,
         hideProgressBar: false,
@@ -68,6 +68,37 @@ function showToastWarning(message: string) {
         draggable: false,
         progress: undefined,
         theme: "dark",
-        icon: false,
     });
+}
+
+export function showToastLoading(message: string) {
+    toastId = toast.loading(message, {
+        position: "bottom-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+    });
+}
+
+export function updateToastLoading(message: string, type: 'error' | 'success' | 'info' | 'warning') {
+
+    if (toastId) {
+        toast.update(toastId, {
+            render: message,
+            type: type,
+            isLoading: false,
+            autoClose: TIME_TO_AUTOCLOSE,
+            theme: "dark",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            icon: true,
+        });
+    }
 }
