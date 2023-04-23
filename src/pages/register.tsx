@@ -21,7 +21,7 @@ export default function Login() {
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-grey-900 p-24">
       <div className="flex flex-col md:w-3/6">
-        <h1 className="font-sans text-xl font-bold text-white mb-4">
+        <h1 className="font-sans text-2xl font-bold text-white mb-4">
             Se cadastre para continuarmos.
         </h1>
         <div className="flex flex-col rounded-lg bg-grey-700 px-5 py-6">
@@ -33,7 +33,7 @@ export default function Login() {
               <Input title="Senha" type="password" register={register('password')} error={errors.password?.message as string | undefined} />
               <button
                 type="submit" 
-                className="rounded-lg bg-green px-4 py-4 font-sans font-bold w-full text-grey-900"
+                className="rounded-lg text-lg bg-green py-4 font-sans font-bold w-full text-grey-900"
               >
                 CADASTRAR
               </button>

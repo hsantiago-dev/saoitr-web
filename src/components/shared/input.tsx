@@ -8,7 +8,7 @@ interface InputProps {
 export default function Input({title, type, register, error}: InputProps) {
     return (
         <div className="flex flex-col space-y-2">
-            <label className="font-sans text-white">
+            <label className="font-sans text-lg text-white">
                 {title}
             </label>
             <input
