@@ -7,10 +7,8 @@ import { UserContext } from "@/context/user.provider";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { SignInUseCase } from "@/@core/app/sign-in.usecase";
-import { UserHttpGateway } from "@/@core/infra/gateways/user-http.gateway";
 import { showToastLoading, updateToastLoading } from '../@core/infra/toast-notification'
-
-import { http } from "@/@core/infra/http";
+import { Registry, container } from "@/@core/infra/container-registry";
 
 const schema = yup
   .object()
@@ -33,8 +31,8 @@ export default function Login() {
 
     setLoading(true);
     showToastLoading('Realizando login...');
-    const gateway = new UserHttpGateway(http);
-    const useCase = new SignInUseCase(gateway);
+    
+    const useCase = container.get<SignInUseCase>(Registry.SignInUseCase);
 
     try {
 
@@ -46,7 +44,11 @@ export default function Login() {
       router.push("/");
       updateToastLoading('Login realizado com sucesso!', 'success');
     } catch (error: any) {
-      updateToastLoading(error.message, 'error');
+      
+      if (error.response.status == 401)
+        updateToastLoading('E-mail ou senha inválidos!', 'warning');
+      else 
+        updateToastLoading(error.message, 'error');
     } finally {
       setLoading(false);
     }
