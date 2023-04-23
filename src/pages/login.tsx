@@ -5,10 +5,10 @@ import * as yup from 'yup';
 import Link from "next/link";
 import { UserContext } from "@/context/user.provider";
 import { useContext } from "react";
-import { User } from "@/@core/domain/entities/user";
 import { useRouter } from "next/router";
 import { SignInUseCase } from "@/@core/app/sign-in.usecase";
 import { UserHttpGateway } from "@/@core/infra/gateways/user-http.gateway";
+import { showToastNotification } from '../@core/infra/toast'
 
 import { http } from "@/@core/infra/http";
 
@@ -32,13 +32,20 @@ export default function Login() {
 
     const gateway = new UserHttpGateway(http);
     const useCase = new SignInUseCase(gateway);
-    const result = await useCase.execute(data.email, data.password);
 
-    console.log(result);
+    try {
 
-    userContext.setUser(result);
+      const result = await useCase.execute(data.email, data.password);
+      console.log(result);
 
-    router.push("/");
+      userContext.setUser(result);
+
+      router.push("/");
+      showToastNotification('Login realizado com sucesso!', 'success');
+    } catch (error: any) {
+      console.log(error);
+      showToastNotification(error.message, 'error');
+    }
   }
   
   return (
