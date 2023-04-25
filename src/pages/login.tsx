@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { SignInUseCase } from "@/@core/app/sign-in.usecase";
 import { showToastLoading, updateToastLoading } from '../@core/infra/toast-notification'
 import { Registry, container } from "@/@core/infra/container-registry";
+import { md5 } from "@/@core/infra/md5";
 
 const schema = yup
   .object()
@@ -36,8 +37,9 @@ export default function Login() {
 
     try {
 
-      const result = await useCase.execute(data.email, data.password);
-      console.log(result);
+      const passwordMd5 = md5(data.password);
+
+      const result = await useCase.execute(data.email, passwordMd5);
 
       userContext.setUser(result);
 
