@@ -17,7 +17,8 @@ export class UserHttpGateway implements UserGateway {
     }
     
     register(data: User): Promise<User> {
-        throw new Error("Method not implemented.");
+        return this.http.post<User>('/users', data)
+        .then(res => res.data);
     }
     update(id: number, data: User): Promise<User> {
         throw new Error("Method not implemented.");
