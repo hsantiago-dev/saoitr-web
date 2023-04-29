@@ -1,6 +1,6 @@
-import { UseCase } from "../domain/base/use-case";
-import { User } from "../domain/entities/user";
-import { UserGateway } from "../domain/gateways/user.gateway";
+import { UseCase } from "../../domain/base/use-case";
+import { User } from "../../domain/entities/user";
+import { UserGateway } from "../../domain/gateways/user.gateway";
 
 type SignUpParams = {
     name: string;

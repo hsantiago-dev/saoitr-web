@@ -1,8 +1,8 @@
 import { Container } from "inversify";
 import { http } from "./http";
 import { UserHttpGateway } from "./gateways/user-http.gateway";
-import { SignInUseCase } from "../app/sign-in.usecase";
-import { SignUpUseCase } from "../app/sign-up.usecase";
+import { SignInUseCase } from "../app/user/sign-in.usecase";
+import { SignUpUseCase } from "../app/user/sign-up.usecase";
 
 export const Registry = {
     AxiosAdapter: Symbol.for('AxiosAdapter'),
