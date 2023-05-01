@@ -6,7 +6,7 @@ import Link from "next/link";
 import { UserContext } from "@/context/user.provider";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import { SignInUseCase } from "@/@core/app/sign-in.usecase";
+import { SignInUseCase } from "../@core/app/user/sign-in.usecase";
 import { showToastLoading, updateToastLoading } from '../@core/infra/toast-notification'
 import { Registry, container } from "@/@core/infra/container-registry";
 import { md5 } from "@/@core/infra/md5";

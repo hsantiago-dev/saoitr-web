@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import Link from "next/link";
 import { showToastLoading, updateToastLoading } from '../@core/infra/toast-notification'
 import { useState } from "react";
-import { SignUpUseCase } from "@/@core/app/sign-up.usecase";
+import { SignUpUseCase } from "@/@core/app/user/sign-up.usecase";
 import { Registry, container } from "@/@core/infra/container-registry";
 import { md5 } from "@/@core/infra/md5";
 import { useRouter } from "next/router";
