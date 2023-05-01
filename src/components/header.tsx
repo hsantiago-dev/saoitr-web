@@ -2,14 +2,24 @@ import { UserContext } from "@/context/user.provider";
 import { User } from "@/@core/domain/entities/user";
 import Link from "next/link";
 import { useContext } from "react";
+import { Registry, container } from "@/@core/infra/container-registry";
+import { SignOutUseCase } from "@/@core/app/user/sign-out.usecase";
 
 
 export default function Header() {
     const userContext = useContext(UserContext);
     let button;
+
+    const signOut = () => {
+        userContext.setUser(null);
+        
+        const useCase = container.get<SignOutUseCase>(Registry.SignOutUseCase);
+
+        useCase.execute();
+    }
     
     if (userContext.user) {
-        button = <LogoutButton user={userContext.user} signOut={() => userContext.setUser(null)} />
+        button = <LogoutButton user={userContext.user} signOut={signOut} />
     } else {
         button = <LoginAndRegisterButtons />
     }

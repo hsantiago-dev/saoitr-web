@@ -2,23 +2,38 @@ import { User } from "@/@core/domain/entities/user";
 import { UserGateway } from "@/@core/domain/gateways/user.gateway";
 
 import { AxiosInstance } from "axios";
+import { TokenStorage } from "../interfaces/token-storage";
+import { UserLoggedDto } from "@/@core/shared/user-logged.dto";
 
 export class UserHttpGateway implements UserGateway {
-    constructor(private http: AxiosInstance) { }
+    constructor(private http: AxiosInstance, private tokenStorage: TokenStorage) { }
+
+    private returnAuthorizationConfig() {
+        return {
+            headers: {
+                Authorization: `Bearer ${this.tokenStorage.getToken()}`
+            },
+        }
+    }
 
     //autenticação
-    login(email:string, password: string): Promise<User> {
+    async login(email:string, password: string): Promise<User> {
         
-        return this.http.post<User>('/login', { email, password })
-        .then(res => res.data);
+        const res = await this.http.post<UserLoggedDto>('/login', { email, password });
+        
+        this.tokenStorage.saveToken(res.data.token);
+        return res.data as User;
     }
-    logout(): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async logout(): Promise<void> {
+        
+        const res = await this.http.post<void>('/logout', {}, this.returnAuthorizationConfig());
+        return res.data;
     }
     
-    register(data: User): Promise<User> {
-        return this.http.post<User>('/users', data)
-        .then(res => res.data);
+    async register(data: User): Promise<User> {
+        const res = await this.http.post<User>('/users', data);
+        return res.data;
     }
     update(id: number, data: User): Promise<User> {
         throw new Error("Method not implemented.");
