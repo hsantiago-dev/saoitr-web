@@ -11,11 +11,11 @@ export default function Header() {
     let button;
 
     const signOut = () => {
-        userContext.setUser(null);
-        
-        const useCase = container.get<SignOutUseCase>(Registry.SignOutUseCase);
 
-        useCase.execute();
+        const useCase = container.get<SignOutUseCase>(Registry.SignOutUseCase);
+        useCase.execute(userContext.user?.id!);
+
+        userContext.setUser(null);
     }
     
     if (userContext.user) {

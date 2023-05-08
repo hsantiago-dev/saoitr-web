@@ -25,9 +25,14 @@ export class UserHttpGateway implements UserGateway {
         return res.data as User;
     }
 
-    async logout(): Promise<void> {
+    async logout(id: number): Promise<void> {
         
-        const res = await this.http.post<void>('/logout', {}, this.returnAuthorizationConfig());
+        const res = await this.http.post<void>('/logout', 
+            {
+                id
+            }, 
+            this.returnAuthorizationConfig()
+        );
         return res.data;
     }
     

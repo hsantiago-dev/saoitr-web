@@ -5,8 +5,8 @@ export class SignOutUseCase implements UseCase<void> {
     
         constructor(private userGateway: UserGateway) { }
     
-        async execute(): Promise<void> {
+        async execute(id: number): Promise<void> {
             
-            return await this.userGateway.logout();
+            return await this.userGateway.logout(id);
         }
 }

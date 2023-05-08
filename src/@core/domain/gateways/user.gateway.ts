@@ -4,7 +4,7 @@ export abstract class UserGateway {
 
     //autenticação
     abstract login(email: string, password: string): Promise<User>;
-    abstract logout(): Promise<void>;
+    abstract logout(id: number): Promise<void>;
 
     abstract register(data: User): Promise<User>;
     abstract update(id: number, data: User): Promise<User>;
