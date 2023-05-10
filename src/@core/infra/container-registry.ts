@@ -6,14 +6,20 @@ import { SignInUseCase } from "../app/user/sign-in.usecase";
 import { SignUpUseCase } from "../app/user/sign-up.usecase";
 import { SignOutUseCase } from "../app/user/sign-out.usecase";
 import { TokenCookieStorage } from "./token-cookie-storage";
+import { OccurrenceHttpGateway } from "./gateways/occurrence-http.gateway";
+import { GetAllOccurrencesUseCase } from "../app/occurrence/get-all-occurrences.usecase";
 
 export const Registry = {
     AxiosAdapter: Symbol.for('AxiosAdapter'),
+    TokenStorageAdapter: Symbol.for('TokenStorageAdapter'),
+
     UserGateway: Symbol.for('UserGateway'),
     SignInUseCase: Symbol.for('SignInUseCase'),
     SignUpUseCase: Symbol.for('SignUpUseCase'),
     SignOutUseCase: Symbol.for('SignOutUseCase'),
-    TokenStorageAdapter: Symbol.for('TokenStorageAdapter'),
+
+    OccurrenceGateway: Symbol.for('OccurrenceGateway'),
+    GetAllOccurrencesUseCase: Symbol.for('GetAllOccurrencesUseCase'),
 }
 
 export const container = new Container();
@@ -36,4 +42,12 @@ container.bind(Registry.SignUpUseCase).toDynamicValue((context) => {
 
 container.bind(Registry.SignOutUseCase).toDynamicValue((context) => {
     return new SignOutUseCase(context.container.get(Registry.UserGateway));
+});
+
+container.bind(Registry.OccurrenceGateway).toDynamicValue((context) => {
+    return new OccurrenceHttpGateway(context.container.get(Registry.AxiosAdapter), context.container.get(Registry.TokenStorageAdapter));
+});
+
+container.bind(Registry.GetAllOccurrencesUseCase).toDynamicValue((context) => {
+    return new GetAllOccurrencesUseCase(context.container.get(Registry.OccurrenceGateway));
 });
