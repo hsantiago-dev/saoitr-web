@@ -29,8 +29,18 @@ export class OccurrenceHttpGateway implements OccurrenceGateway {
 
     async getAll(): Promise<Occurrence[]> {
                 
-        const occurrences = await this.http.get<Occurrence[]>('/occurrences')
-        .then(res => res.data);
+        const occurrences = await this.http.get<any[]>('/occurrences')
+        .then(res => {
+            return res.data.map(occurrence => new Occurrence({
+                id: occurrence.id
+                , date: occurrence.date
+                , time: occurrence.time
+                , local: occurrence.local
+                , occurrenceType: occurrence.occurrence_type
+                , km: occurrence.km
+                , userId: occurrence.user_id 
+            }));
+        });
 
         return occurrences;
     }
