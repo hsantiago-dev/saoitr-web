@@ -1,7 +1,7 @@
 import { UserProvider } from '@/context/user.provider';
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Ubuntu as Sans, Ubuntu_Mono as Mono } from 'next/font/google'
+import { Cabin as Sans, Ubuntu_Mono as Mono } from 'next/font/google'
 import Head from 'next/head';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 const sans = Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ["300", "400", "500", "700"],
+  weight: [ "400", "500", "600", "700"],
 });
 
 const mono = Mono({
