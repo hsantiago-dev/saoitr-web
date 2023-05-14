@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useState } from 'react';
 import EditableField from '@/components/shared/editable_field';
+import { useRouter } from 'next/router';
 
 const schema = yup
   .object()
@@ -21,6 +22,8 @@ export default function User() {
     }
   });
 
+  const router = useRouter();
+
   // setValue('name', 'Teste');
 
   const [ loading, setLoading ] = useState<boolean>(false);
@@ -28,9 +31,17 @@ export default function User() {
     return (
       <main className="flex h-screen flex-col items-center justify-center bg-grey-900">
         <div className="flex flex-col md:w-3/6">
-          <h1 className="font-sans text-2xl font-bold text-white mb-4">
-            Perfil!
-          </h1>
+          <div className='flex items-start'>
+            <button className='text-redLight' onClick={() => router.push("/") }>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                <path d="M5.566 4.657A4.505 4.505 0 016.75 4.5h10.5c.41 0 .806.055 1.183.157A3 3 0 0015.75 3h-7.5a3 3 0 00-2.684 1.657zM2.25 12a3 3 0 013-3h13.5a3 3 0 013 3v6a3 3 0 01-3 3H5.25a3 3 0 01-3-3v-6zM5.25 7.5c-.41 0-.806.055-1.184.157A3 3 0 016.75 6h10.5a3 3 0 012.683 1.657A4.505 4.505 0 0018.75 7.5H5.25z" />
+              </svg>
+            </button>
+            <h1 className="font-sans text-xl font-bold text-grey-700 mx-2">|</h1>
+            <h1 className="font-sans text-2xl font-bold text-white mb-4">
+              Perfil
+            </h1>
+          </div>
           <div className="flex flex-col rounded-lg bg-grey-700 px-5 py-6">
             <div
               className='w-40 h-40 rounded-full bg-green/20 mb-4 self-center flex justify-center items-center text-green'
