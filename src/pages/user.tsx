@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import EditableField from '@/components/shared/editable_field';
 import { useRouter } from 'next/router';
+import ModalChangePassword from '@/components/shared/modal-change-password';
 
 const schema = yup
   .object()
@@ -42,12 +43,12 @@ export default function User() {
               Perfil
             </h1>
           </div>
-          <div className="flex flex-col rounded-lg bg-grey-700 px-5 py-6">
+          <div className="flex flex-col rounded-lg bg-grey-700 px-5 py-7 space-y-4">
             <div
-              className='w-40 h-40 rounded-full bg-green/20 mb-4 self-center flex justify-center items-center text-green'
+              className='w-40 h-40 rounded-full bg-purple/20 mb-4 self-center flex justify-center items-center text-green'
             >
               <div
-                className='w-32 h-32 rounded-full bg-green/40 self-center flex justify-center items-center text-white/90'
+                className='w-32 h-32 rounded-full bg-purple/40 self-center flex justify-center items-center text-white/90'
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -55,7 +56,7 @@ export default function User() {
               </div>
             </div>
             <form onSubmit={handleSubmit((d) => console.log(d))}
-              className="flex flex-col space-y-5"
+              className="flex flex-col space-y-7"
             >
               <EditableField 
                 title="Nome" 
@@ -71,13 +72,7 @@ export default function User() {
                 error={errors.email?.message as string | undefined}
                 value='henrick@mail.com'
               />
-              <button
-                type="submit" 
-                className="rounded-lg text-lg bg-green/40 py-4 font-sans font-bold w-full text-white"
-                disabled={loading}
-              >
-                ALTERAR A SENHA
-              </button>
+              <ModalChangePassword />
             </form>
         </div>
         </div>
