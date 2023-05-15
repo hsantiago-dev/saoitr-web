@@ -19,7 +19,7 @@ export default function ModalChangePassword() {
         <>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-grey-900/70">
             <div className="relative w-2/6 my-6 mx-auto max-w-3xl">
-              <div className="rounded-lg shadow-lg relative flex flex-col w-full bg-grey-800 outline-none focus:outline-none py-6">
+              <div className="rounded-lg shadow-lg relative flex flex-col w-full bg-grey-700 outline-none focus:outline-none py-6">
                 <div className="flex items-start justify-between px-6 pb-5">
                   <h3 className="text-3xl font-semibold">Altere sua senha</h3>
                   <button

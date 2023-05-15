@@ -68,7 +68,7 @@ function LogoutButton({ user, signOut }: any) {
         <div className="flex space-x-3">
             <Link
                 href={"/user"}
-                className="flex text-green"
+                className="flex text-purple"
             >
                 <h1 className="font-sans text-2xl mr-2 font-bold">{user.name}</h1>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 mt-1">
@@ -78,7 +78,7 @@ function LogoutButton({ user, signOut }: any) {
             <h1 className="font-sans text-xl font-bold text-grey-700">|</h1>
             <button
                 onClick={signOut}
-                className="flex text-purple items-center"
+                className="flex text-green items-center"
             >
                 <h1 className="font-sans text-2xl mr-2 font-bold">Sair</h1>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
