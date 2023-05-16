@@ -44,7 +44,7 @@ export default function ModalChangePassword() {
                   />
                   <button
                     type="submit" 
-                    onClick={() => setShowModal(false)}
+                    // onClick={() => setShowModal(false)}
                     className="rounded-lg text-lg bg-purple py-4 font-sans font-bold w-full text-grey-800"
                   >
                     SALVAR

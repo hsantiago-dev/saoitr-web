@@ -2,6 +2,7 @@ import { GetAllOccurrencesUseCase } from "@/@core/app/occurrence/get-all-occurre
 import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { Registry, container } from "@/@core/infra/container-registry";
 import Header from "@/components/header";
+import ModalNewOccurrence from "@/components/modal-new-occurrence";
 import { use, useEffect, useState } from "react";
 
 export default function Home() {
@@ -55,6 +56,7 @@ export default function Home() {
             </div>
           ))}
         </div>
+        <ModalNewOccurrence />
       </div>
     </main>
   );
