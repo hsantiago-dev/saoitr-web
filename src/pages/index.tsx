@@ -3,11 +3,13 @@ import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { Registry, container } from "@/@core/infra/container-registry";
 import Header from "@/components/header";
 import ModalNewOccurrence from "@/components/modal-new-occurrence";
-import { use, useEffect, useState } from "react";
+import { UserContext } from "@/context/user.provider";
+import { use, useContext, useEffect, useState } from "react";
 
 export default function Home() {
 
   const [ occurrences, setOccurrences ] = useState<Occurrence[]>([]);
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     getOccurrences();
@@ -56,7 +58,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <ModalNewOccurrence />
+        { userContext.user ? ( <ModalNewOccurrence /> ) : null }
       </div>
     </main>
   );
