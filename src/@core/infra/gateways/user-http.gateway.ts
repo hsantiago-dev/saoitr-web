@@ -40,8 +40,9 @@ export class UserHttpGateway implements UserGateway {
         const res = await this.http.post<User>('/users', data);
         return res.data;
     }
-    update(id: number, data: User): Promise<User> {
-        throw new Error("Method not implemented.");
+    async update(id: number, data: Partial<User>): Promise<User> {
+        const res = await this.http.put('/users/' + id, data, this.returnAuthorizationConfig());
+        return res.data;
     }
     getById(): Promise<User[]> {
         throw new Error("Method not implemented.");

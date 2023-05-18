@@ -7,7 +7,7 @@ export abstract class UserGateway {
     abstract logout(id: number): Promise<void>;
 
     abstract register(data: User): Promise<User>;
-    abstract update(id: number, data: User): Promise<User>;
+    abstract update(id: number, data: Partial<User>): Promise<User>;
     abstract getById(): Promise<User[]>;
     abstract delete(id: number): Promise<void>;
 }

@@ -8,6 +8,7 @@ import { SignOutUseCase } from "../app/user/sign-out.usecase";
 import { TokenCookieStorage } from "./token-cookie-storage";
 import { OccurrenceHttpGateway } from "./gateways/occurrence-http.gateway";
 import { GetAllOccurrencesUseCase } from "../app/occurrence/get-all-occurrences.usecase";
+import { EditUserUseCase } from "../app/user/edit-user.usecase";
 
 export const Registry = {
     AxiosAdapter: Symbol.for('AxiosAdapter'),
@@ -17,6 +18,7 @@ export const Registry = {
     SignInUseCase: Symbol.for('SignInUseCase'),
     SignUpUseCase: Symbol.for('SignUpUseCase'),
     SignOutUseCase: Symbol.for('SignOutUseCase'),
+    EditUserUseCase: Symbol.for('EditUserUseCase'),
 
     OccurrenceGateway: Symbol.for('OccurrenceGateway'),
     GetAllOccurrencesUseCase: Symbol.for('GetAllOccurrencesUseCase'),
@@ -42,6 +44,10 @@ container.bind(Registry.SignUpUseCase).toDynamicValue((context) => {
 
 container.bind(Registry.SignOutUseCase).toDynamicValue((context) => {
     return new SignOutUseCase(context.container.get(Registry.UserGateway));
+});
+
+container.bind(Registry.EditUserUseCase).toDynamicValue((context) => {
+    return new EditUserUseCase(context.container.get(Registry.UserGateway));
 });
 
 container.bind(Registry.OccurrenceGateway).toDynamicValue((context) => {
