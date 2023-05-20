@@ -3,7 +3,7 @@ import { Entity } from "../base/entity";
 
 export class User extends Entity {
     public name: string;
-    public password?: string;
+    public password?: string | null;
     public email: string;
 
     public constructor(data: Partial<User>) {

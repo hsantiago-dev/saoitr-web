@@ -8,15 +8,11 @@ export class EditUserUseCase implements UseCase<User> {
     
         async execute(id: number, user: UserEdit): Promise<User> {
             
-            let updateParams: Partial<User> = {};
-
-            if (user.name) {
-                updateParams.name = user.name;
-            } else if (user.email) {
-                updateParams.email = user.email;
-            } else if (user.password) {
-                updateParams.password = user.password;
-            }
+            let updateParams: Partial<User> = {
+                name: user.name!,
+                email: user.email!,
+                password: user.password
+            };
 
             return await this.userGateway.update(id, updateParams);
         }

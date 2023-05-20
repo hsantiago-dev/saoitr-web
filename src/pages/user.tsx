@@ -1,33 +1,13 @@
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useState } from 'react';
+import { useContext } from 'react';
 import EditableField from '@/components/shared/editable_field';
 import { useRouter } from 'next/router';
 import ModalChangePassword from '@/components/shared/modal-change-password';
-
-const schema = yup
-  .object()
-  .shape({
-    name: yup.string().required(),
-    email: yup.string().required().email('must be a valid email')
-  })
-  .required();
+import { UserContext } from '@/context/user.provider';
 
 export default function User() {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      name: 'Henrick Santiago',
-      email: 'henrick@mail.com'
-    }
-  });
+  const userContext = useContext(UserContext);
 
   const router = useRouter();
-
-  // setValue('name', 'Teste');
-
-  const [ loading, setLoading ] = useState<boolean>(false);
 
     return (
       <main className="flex h-screen flex-col items-center justify-center bg-grey-900">
@@ -55,25 +35,21 @@ export default function User() {
                 </svg>
               </div>
             </div>
-            <form onSubmit={handleSubmit((d) => console.log(d))}
+            <div
               className="flex flex-col space-y-7"
             >
               <EditableField 
                 title="Nome" 
                 type="text" 
-                register={register('name')} 
-                error={errors.name?.message as string | undefined}
-                value='Henrick Santiago'
+                value={userContext.user?.name}
               />
               <EditableField 
                 title="E-mail" 
                 type="email" 
-                register={register('email')} 
-                error={errors.email?.message as string | undefined}
-                value='henrick@mail.com'
+                value={userContext.user?.email}
               />
               <ModalChangePassword />
-            </form>
+            </div>
         </div>
         </div>
       </main> 
