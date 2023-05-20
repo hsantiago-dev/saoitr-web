@@ -8,14 +8,54 @@ export default function ModalNewOccurrence() {
 
   return (
     <>
+      <style jsx>{`
+        .button {
+          position: relative;
+          overflow: hidden;
+          height: 3rem;
+          padding: 0 2rem;
+          border-radius: 1.5rem;
+          background: #181E24;
+          background-size: 400%;
+          color: #fff;
+          border: none;
+        }
+        
+        .button:hover::before {
+          transform: scaleX(1);
+        }
+        
+        .button-content {
+          position: relative;
+          z-index: 1;
+        }
+        
+        .button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: scaleX(0);
+          transform-origin: 0 50%;
+          width: 100%;
+          height: inherit;
+          border-radius: inherit;
+          background: linear-gradient(
+            82.3deg,
+            rgba(255, 155, 133, 1) 10.8%,
+            rgba(238, 96, 85, 1) 94.3%
+          );
+          transition: all 0.475s;
+        }
+      `}</style>
       <button
         onClick={() => setShowModal(true)}
-        className="fixed bottom-10 right-10 bg-redLight rounded-full shadow-xl p-4 text-grey-900 flex items-center justify-center space-x-2"
+        className="button bg-redLight rounded-full shadow-xl p-4 text-grey-900 flex items-center justify-center space-x-2"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 button-content">
           <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
         </svg>
-        <span className="text-lg font-bold">Ocorrência</span>
+        <span className="text-lg font-bold button-content">Ocorrência</span>
       </button>
       { showModal ? (
         <>

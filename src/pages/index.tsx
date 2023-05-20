@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main className="flex h-screen flex-col items-start justify-center bg-grey-900 p-16">
       <Header />
-      <div className="flex flex-col overflow-auto  h-full w-full rounded-lg bg-grey-700 shadow-xl">
+      <div className="flex flex-col justify-between overflow-auto  h-full w-full rounded-lg bg-grey-700 shadow-xl">
         <div className="grid grid-cols-2 gap-4 px-10 py-10">
           {occurrences.map(occurrence => (
             <div className="bg-grey-900 px-5 py-6 rounded-lg border-2 border-grey-900 border-b-grey-800" key={occurrence.id}>
@@ -58,7 +58,9 @@ export default function Home() {
             </div>
           ))}
         </div>
-        { userContext.user ? ( <ModalNewOccurrence /> ) : null }
+        <div className="flex justify-end px-10 py-5">
+          { userContext.user ? ( <ModalNewOccurrence /> ) : null }
+        </div>
       </div>
     </main>
   );
