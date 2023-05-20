@@ -17,7 +17,7 @@ export default function ModalNewOccurrence() {
           border-radius: 1.5rem;
           background: #181E24;
           background-size: 400%;
-          color: #fff;
+          // color: #fff;
           border: none;
         }
         
@@ -50,7 +50,7 @@ export default function ModalNewOccurrence() {
       `}</style>
       <button
         onClick={() => setShowModal(true)}
-        className="button bg-redLight rounded-full shadow-xl p-4 text-grey-900 flex items-center justify-center space-x-2"
+        className="button bg-redLight rounded-full shadow-xl p-4 text-white flex items-center justify-center space-x-2 hover:text-grey-900"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 button-content">
           <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
