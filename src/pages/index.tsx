@@ -3,6 +3,7 @@ import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { Registry, container } from "@/@core/infra/container-registry";
 import Header from "@/components/header";
 import ModalNewOccurrence from "@/components/modal-new-occurrence";
+import CardOccurrence from "@/components/shared/card-occurrence";
 import { UserContext } from "@/context/user.provider";
 import { use, useContext, useEffect, useState } from "react";
 
@@ -35,27 +36,15 @@ export default function Home() {
       <div className="flex flex-col justify-between overflow-auto  h-full w-full rounded-lg bg-grey-700 shadow-xl">
         <div className="grid grid-cols-2 gap-4 px-10 py-10">
           {occurrences.map(occurrence => (
-            <div className="bg-grey-900 px-5 py-6 rounded-lg border-2 border-grey-900 border-b-grey-800" key={occurrence.id}>
-              <div className="text-xl font-bold bg-grey-800 w-full text-center rounded-lg py-2 text-white/80 uppercase border-2 border-grey-700">
-                {occurrence.occurrenceType}
-              </div>
-              <div className="flex mt-3 justify-between text-redLight text-lg">
-                <span>
-                  #{occurrence.id}
-                </span>
-                <span>
-                  {occurrence.date} {occurrence.time}
-                </span>
-              </div>
-              <div className="flex mt-3 justify-between text-lg">
-                <span>
-                  {occurrence.local}
-                </span>
-                <span>
-                  Próximo ao KM {occurrence.km}
-                </span>
-              </div>
-            </div>
+            <CardOccurrence 
+              key={occurrence.id}
+              id={occurrence.id!}
+              occurrenceType={occurrence.occurrenceType}
+              date={occurrence.date}
+              time={occurrence.time}
+              local={occurrence.local}
+              km={occurrence.km}
+            />
           ))}
         </div>
         <div className="flex justify-end px-10 py-5">
