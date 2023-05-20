@@ -49,8 +49,10 @@ export default function Login() {
       updateToastLoading('Cadastro realizado com sucesso!', 'success');
     } catch (error: any) {
       
-      if (error.response.status == 401)
-        updateToastLoading('E-mail ou senha inválidos!', 'warning');
+      if (error.response.status == 400)
+        updateToastLoading('Campos inválidos!', 'warning');
+      else if (error.response.status == 422)
+        updateToastLoading('E-mail já cadastrado!', 'warning');
       else 
         updateToastLoading(error.message, 'error');
     } finally {
