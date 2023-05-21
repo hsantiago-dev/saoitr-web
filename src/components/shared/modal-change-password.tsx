@@ -1,10 +1,56 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Input from "./input";
+import { Registry, container } from "@/@core/infra/container-registry";
+import { EditUserUseCase } from "@/@core/app/user/edit-user.usecase";
+import { UserContext } from "@/context/user.provider";
+import { showToastNotification } from "@/@core/infra/toast-notification";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { md5 } from "@/@core/infra/md5";
+const schema = yup
+  .object()
+  .shape({
+    password: yup.string().required().min(6, "must be at least 6 characters"),
+    passwordConfirmation: yup.string().required().oneOf([yup.ref('password')], 'Passwords must match'),
+  })
+  .required();
 
 
 export default function ModalChangePassword() {
+  const { register, handleSubmit, formState: { errors }, } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const [ showModal, setShowModal ] = useState<boolean>(false);
+  const userContext = useContext(UserContext);
+
+  const updatePassword = async (data: any) => {
+      
+    const useCase = container.get<EditUserUseCase>(Registry.EditUserUseCase);
+  
+    try {
+
+      const updateParams: any = {
+        name: userContext.user?.name,
+        email: userContext.user?.email,
+        password: md5(data.password)
+      };
+  
+      const result = await useCase.execute(userContext.user?.id!, updateParams);
+      
+      userContext.setUser(result);
+
+      showToastNotification('Atualização realizada!', 'success');
+      setShowModal(false);
+    } catch (error: any) {
+        
+      if (error.response.status == 400)
+        showToastNotification('Campo não é valido.', 'warning');
+      else 
+        showToastNotification(error.message, 'error');
+    }
+  }
 
   return (
     <>
@@ -31,16 +77,18 @@ export default function ModalChangePassword() {
                     </svg>
                   </button>
                 </div>
-                <form className="rounded px-6 w-full flex flex-col space-y-6">
+                <form onSubmit={handleSubmit((d) => updatePassword(d))} className="rounded px-6 w-full flex flex-col space-y-6">
                   <Input 
-                    title="Senha"  
-                    type="password"
-                    register={{ required: true }}
+                    title="Senha" 
+                    type="password" 
+                    register={register('password')} 
+                    error={errors.password?.message as string | undefined} 
                   />
                   <Input 
-                    title="Confirme sua senha"  
-                    type="password"
-                    register={{ required: true }}
+                    title="Confirme sua senha" 
+                    type="password" 
+                    register={register('passwordConfirmation')} 
+                    error={errors.passwordConfirmation?.message as string | undefined} 
                   />
                   <button
                     type="submit" 
