@@ -22,9 +22,9 @@ export default function Home() {
 
     try {
 
-      const result = await useCase.execute();
-      console.log(result);
-      setOccurrences(result);
+      // const result = await useCase.execute();
+      
+      setOccurrences([]);
     } catch (error: any) {
       console.log(error);
     }
