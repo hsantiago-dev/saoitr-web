@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import ModalNewOccurrence from "@/components/modal-new-occurrence";
 import CardOccurrence from "@/components/shared/card-occurrence";
 import { UserContext } from "@/context/user.provider";
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
 
@@ -22,11 +22,11 @@ export default function Home() {
 
     try {
 
-      // const result = await useCase.execute();
+      const result = await useCase.execute();
       
-      setOccurrences([]);
+      setOccurrences(result);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -39,9 +39,8 @@ export default function Home() {
             <CardOccurrence 
               key={occurrence.id}
               id={occurrence.id!}
-              occurrenceType={occurrence.occurrenceType}
-              date={occurrence.date}
-              time={occurrence.time}
+              occurrenceType={occurrence.occurrenceTypeDescription}
+              registered_at={occurrence.registered_at}
               local={occurrence.local}
               km={occurrence.km}
             />

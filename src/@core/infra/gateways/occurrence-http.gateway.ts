@@ -33,8 +33,7 @@ export class OccurrenceHttpGateway implements OccurrenceGateway {
         .then(res => {
             return res.data.map(occurrence => new Occurrence({
                 id: occurrence.id
-                , date: occurrence.date
-                , time: occurrence.time
+                , registered_at: occurrence.registered_at
                 , local: occurrence.local
                 , occurrenceType: occurrence.occurrence_type
                 , km: occurrence.km

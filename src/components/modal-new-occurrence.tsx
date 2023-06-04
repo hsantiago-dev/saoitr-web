@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Input from "./shared/input";
+import Select from "./shared/select";
+import { OccurrenceTypes } from "@/@core/domain/entities/occurrence-types";
 
 
 export default function ModalNewOccurrence() {
 
   const [ showModal, setShowModal ] = useState<boolean>(false);
+
+  const occurrenceTypes = new OccurrenceTypes();
 
   return (
     <>
@@ -74,9 +78,17 @@ export default function ModalNewOccurrence() {
                   </button>
                 </div>
                 <form className="rounded px-6 w-full flex flex-col space-y-3">
-                  <Input 
-                    title="Tipo de ocorrência"  
-                    type="text"
+                  <Select 
+                    title="Tipo de ocorrência"
+                    options={
+                      occurrenceTypes.types.map((type) => {
+                          return {
+                            value: type.id,
+                            label: type.name
+                          }
+                        }
+                      )
+                    }
                     register={{ required: true }}
                   />
                   <div className="grid grid-cols-4 space-x-3">

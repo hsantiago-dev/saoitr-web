@@ -3,13 +3,12 @@ import { Occurrence } from "@/@core/domain/entities/occurrence";
 interface CardOccurrenceProps {
   id: number;
   occurrenceType: string;
-  date: string;
-  time: string;
+  registered_at: string;
   local: string;
   km: number;
 }
 
-export default function CardOccurrence({ id, occurrenceType, date, time, local, km }: CardOccurrenceProps) {
+export default function CardOccurrence({ id, occurrenceType, registered_at, local, km }: CardOccurrenceProps) {
   return (
     <>
       <style jsx>{`
@@ -43,7 +42,7 @@ export default function CardOccurrence({ id, occurrenceType, date, time, local, 
               #{id}
             </span>
             <span>
-              {date} {time}
+              {registered_at}
             </span>
           </div>
           <div className="flex mt-3 justify-between text-lg">
