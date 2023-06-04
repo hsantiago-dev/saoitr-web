@@ -18,7 +18,7 @@ export default function Select({title, options, register, error}: SelectProps) {
             </label>
             <select 
                 {...register}
-                className="rounded-lg text-lg bg-grey-900 py-2 px-3 font-sans font-bold w-full text-white"
+                className="rounded-lg bg-grey-900 py-2 px-4 font-sans font-medium shadow hover:bg-grey-800"
             >
                 <option value=""></option>
                 {options.map((option, index) => (
