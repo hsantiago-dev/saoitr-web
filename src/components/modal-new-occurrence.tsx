@@ -1,14 +1,73 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./shared/input";
 import Select from "./shared/select";
 import { OccurrenceTypes } from "@/@core/domain/entities/occurrence-types";
+import { Registry, container } from "@/@core/infra/container-registry";
+import { CreateNewOccurrenceUseCase } from "@/@core/app/occurrence/create-new-occurrence.usecase";
+import { Occurrence } from "@/@core/domain/entities/occurrence";
+import { showToastNotification } from "@/@core/infra/toast-notification";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
+const schema = yup
+  .object()
+  .shape({
+    local: yup.string().required().min(3, "must be at least 3 characters"),
+    occurrence_type: yup.number().required().typeError('must be a valid occurrence type'),
+    km: yup.number().required(),
+    date: yup.string().required().typeError('must be a valid date'),
+    time: yup.string().required().typeError('must be a valid time'),
+  })
+  .required();
 
 export default function ModalNewOccurrence() {
+
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const [ showModal, setShowModal ] = useState<boolean>(false);
 
   const occurrenceTypes = new OccurrenceTypes();
+
+  useEffect(() => {
+    setValue('km', 1);
+  }, []);
+
+  const createNewOccurrence = (data: any) => {
+
+    const useCase = container.get<CreateNewOccurrenceUseCase>(Registry.CreateNewOccurrenceUseCase);
+
+    const occurrence = new Occurrence({
+      registered_at: data.date + ' ' + data.time + ':00',
+      local: data.local,
+      occurrenceType: data.occurrence_type,
+      km: data.km,
+      userId: 1,
+    });
+
+    try {
+
+      const result = useCase.execute(occurrence);
+
+      console.log(result)
+
+      showToastNotification('Ocorrência registrada com sucesso!', 'success');
+      setValue('local', '');
+      setValue('occurrence_type', '');
+      setValue('km', 1);
+      setValue('date', '');
+      setValue('time', '');
+      setShowModal(false);
+    } catch (error: any) {
+      
+      if (error.response.status == 400)
+        showToastNotification('Campo não é valido.', 'warning');
+      else 
+        showToastNotification(error.message, 'error');
+    }
+  }
 
   return (
     <>
@@ -77,7 +136,10 @@ export default function ModalNewOccurrence() {
                     </svg>
                   </button>
                 </div>
-                <form className="rounded px-6 w-full flex flex-col space-y-3">
+                <form 
+                  className="rounded px-6 w-full flex flex-col space-y-3"
+                  onSubmit={handleSubmit(createNewOccurrence)}  
+                >
                   <Select 
                     title="Tipo de ocorrência"
                     options={
@@ -89,32 +151,37 @@ export default function ModalNewOccurrence() {
                         }
                       )
                     }
-                    register={{ required: true }}
+                    register={register('occurrence_type')}
+                    error={errors.occurrence_type?.message as string | undefined}
                   />
                   <div className="grid grid-cols-4 space-x-3">
                     <div className="col-span-3">
                       <Input 
                         title="Local"  
                         type="text"
-                        register={{ required: true }}
+                        register={register('local')}
+                        error={errors.local?.message as string | undefined}
                       />
                     </div>
                     <Input 
                       title="KM"
                       type="number"
-                      register={{ required: true }}
+                      register={register('km')}
+                      error={errors.km?.message as string | undefined}
                     />
                   </div>
                   <div className="grid grid-cols-2 space-x-3">
                     <Input 
                       title="Data da ocorrência"
                       type="date"
-                      register={{ required: true }}
+                      register={register('date')}
+                      error={errors.date?.message as string | undefined}
                     />
                     <Input 
                       title="Hora da ocorrência"
                       type="time"
-                      register={{ required: true }}
+                      register={register('time')}
+                      error={errors.date?.message as string | undefined}
                     />
                   </div>
                   <div className="grid grid-cols-2">

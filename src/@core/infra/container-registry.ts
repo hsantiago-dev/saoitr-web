@@ -9,6 +9,7 @@ import { TokenCookieStorage } from "./token-cookie-storage";
 import { OccurrenceHttpGateway } from "./gateways/occurrence-http.gateway";
 import { GetAllOccurrencesUseCase } from "../app/occurrence/get-all-occurrences.usecase";
 import { EditUserUseCase } from "../app/user/edit-user.usecase";
+import { CreateNewOccurrenceUseCase } from "../app/occurrence/create-new-occurrence.usecase";
 
 export const Registry = {
     AxiosAdapter: Symbol.for('AxiosAdapter'),
@@ -22,6 +23,7 @@ export const Registry = {
 
     OccurrenceGateway: Symbol.for('OccurrenceGateway'),
     GetAllOccurrencesUseCase: Symbol.for('GetAllOccurrencesUseCase'),
+    CreateNewOccurrenceUseCase: Symbol.for('CreateNewOccurrenceUseCase'),
 }
 
 export const container = new Container();
@@ -56,4 +58,8 @@ container.bind(Registry.OccurrenceGateway).toDynamicValue((context) => {
 
 container.bind(Registry.GetAllOccurrencesUseCase).toDynamicValue((context) => {
     return new GetAllOccurrencesUseCase(context.container.get(Registry.OccurrenceGateway));
+});
+
+container.bind(Registry.CreateNewOccurrenceUseCase).toDynamicValue((context) => {
+    return new CreateNewOccurrenceUseCase(context.container.get(Registry.OccurrenceGateway));
 });
