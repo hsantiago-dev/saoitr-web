@@ -17,7 +17,7 @@ export default function Header() {
         userContext.setUser(null);
     }
     
-    if (userContext.user) {
+    if (userContext.user && userContext.user.name) {
         button = <LogoutButton user={userContext.user} signOut={signOut} />
     } else {
         button = <LoginAndRegisterButtons />
