@@ -47,7 +47,7 @@ export default function Home() {
           ))}
         </div>
         <div className="flex justify-end px-10 py-5">
-          { userContext.user?.name ? ( <ModalNewOccurrence /> ) : null }
+          { userContext.user?.name ? ( <ModalNewOccurrence eventRefreshOccurrences={function eventRefreshOccurrences() { getOccurrences() }} /> ) : null }
         </div>
       </div>
     </main>

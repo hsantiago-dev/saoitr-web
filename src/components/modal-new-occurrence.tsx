@@ -21,7 +21,11 @@ const schema = yup
   })
   .required();
 
-export default function ModalNewOccurrence() {
+type ModalNewOccurrenceProps = {
+  eventRefreshOccurrences: any;
+}
+
+export default function ModalNewOccurrence({ eventRefreshOccurrences } : ModalNewOccurrenceProps) {
 
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(schema),
@@ -35,7 +39,7 @@ export default function ModalNewOccurrence() {
     setValue('km', 1);
   }, []);
 
-  const createNewOccurrence = (data: any) => {
+  const createNewOccurrence = async (data: any) => {
 
     const useCase = container.get<CreateNewOccurrenceUseCase>(Registry.CreateNewOccurrenceUseCase);
 
@@ -49,9 +53,7 @@ export default function ModalNewOccurrence() {
 
     try {
 
-      const result = useCase.execute(occurrence);
-
-      console.log(result)
+      const result = await useCase.execute(occurrence);
 
       showToastNotification('Ocorrência registrada com sucesso!', 'success');
       setValue('local', '');
@@ -60,8 +62,10 @@ export default function ModalNewOccurrence() {
       setValue('date', '');
       setValue('time', '');
       setShowModal(false);
+      eventRefreshOccurrences();
     } catch (error: any) {
       
+      console.error(error);
       if (error.response.status == 400)
         showToastNotification('Campo não é valido.', 'warning');
       else 
