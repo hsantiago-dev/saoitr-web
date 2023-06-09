@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "./shared/input";
 import Select from "./shared/select";
 import { OccurrenceTypes } from "@/@core/domain/entities/occurrence-types";
@@ -9,6 +9,7 @@ import { showToastNotification } from "@/@core/infra/toast-notification";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { UserContext } from "@/context/user.provider";
 
 const schema = yup
   .object()
@@ -35,6 +36,8 @@ export default function ModalNewOccurrence({ eventRefreshOccurrences } : ModalNe
 
   const occurrenceTypes = new OccurrenceTypes();
 
+  const userContext = useContext(UserContext);
+
   useEffect(() => {
     setValue('km', 1);
   }, []);
@@ -48,7 +51,7 @@ export default function ModalNewOccurrence({ eventRefreshOccurrences } : ModalNe
       local: data.local,
       occurrenceType: data.occurrence_type,
       km: data.km,
-      userId: 1,
+      userId: userContext.user?.id,
     });
 
     try {
