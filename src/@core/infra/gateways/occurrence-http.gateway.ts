@@ -62,9 +62,21 @@ export class OccurrenceHttpGateway implements OccurrenceGateway {
         return occurrences;
     }
 
-    async getMany(filter: Partial<Occurrence>): Promise<Occurrence[]> {
+    async getAllByUser(idUser: number): Promise<Occurrence[]> {
                     
-        throw new Error("Method not implemented.");
+        const occurrences = await this.http.get<any[]>(`/occurrences/users/${idUser}`, this.returnAuthorizationConfig())
+        .then(res => {
+            return res.data.map(occurrence => new Occurrence({
+                id: occurrence.id
+                , registered_at: occurrence.registered_at
+                , local: occurrence.local
+                , occurrenceType: occurrence.occurrence_type
+                , km: occurrence.km
+                , userId: occurrence.user_id 
+            }));
+        });
+
+        return occurrences;
     }
 
     async delete(id: number): Promise<void> {

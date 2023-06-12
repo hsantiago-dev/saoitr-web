@@ -4,8 +4,11 @@ import { useContext } from "react";
 import { Registry, container } from "@/@core/infra/container-registry";
 import { SignOutUseCase } from "@/@core/app/user/sign-out.usecase";
 
+type HeaderProps = {
+    page: string;
+}
 
-export default function Header() {
+export default function Header({ page }: HeaderProps) {
     const userContext = useContext(UserContext);
     let button;
 
@@ -26,9 +29,19 @@ export default function Header() {
     return (
         <div className="w-full flex justify-between mb-4 select-none">
             <div className="flex space-x-3">
-                <h1 className="font-sans text-2xl font-bold text-redLight">Ocorrências</h1>
+                <Link 
+                    href={"/"}
+                    className={"font-sans text-2xl font-bold" + (page === "/" ? " text-redLight" : " text-white/20")}
+                >
+                    Ocorrências
+                </Link>
                 <h1 className="font-sans text-2xl font-bold text-grey-700">|</h1>
-                <h1 className="font-sans text-2xl font-bold text-white/20">Minhas ocorrências</h1>
+                <Link 
+                    href={"/my-occurrences"}
+                    className={"font-sans text-2xl font-bold" + (page === "/my-occurrences" ? " text-redLight" : " text-white/20")}
+                >
+                    Minhas ocorrências
+                </Link>
             </div>
             {button}
         </div>
