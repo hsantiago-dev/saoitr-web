@@ -11,6 +11,7 @@ type HeaderProps = {
 export default function Header({ page }: HeaderProps) {
     const userContext = useContext(UserContext);
     let button;
+    const userLogged = userContext.user && userContext.user.name;
 
     const signOut = () => {
 
@@ -20,7 +21,7 @@ export default function Header({ page }: HeaderProps) {
         userContext.setUser(null);
     }
     
-    if (userContext.user && userContext.user.name) {
+    if (userLogged) {
         button = <LogoutButton user={userContext.user} signOut={signOut} />
     } else {
         button = <LoginAndRegisterButtons />
@@ -37,10 +38,12 @@ export default function Header({ page }: HeaderProps) {
                 </Link>
                 <h1 className="font-sans text-2xl font-bold text-grey-700">|</h1>
                 <Link 
-                    href={"/my-occurrences"}
+                    href={userLogged ? "/my-occurrences" : {}}
                     className={"font-sans text-2xl font-bold" + (page === "/my-occurrences" ? " text-redLight" : " text-white/20")}
                 >
-                    Minhas ocorrências
+                    <button onClick={(event) => !userLogged ? event.preventDefault() : null}>
+                        Minhas ocorrências
+                    </button>
                 </Link>
             </div>
             {button}

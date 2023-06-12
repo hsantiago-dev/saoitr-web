@@ -57,11 +57,11 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
           {editable && (
             <div className="flex mt-3 justify-space-around">
               <button 
-                className="bg-blue text-grey-900 px-3 py-1 rounded-lg hover:bg-blue/80 transition-all duration-200 grow mx-2 text-lg font-bold"
+                className="bg-blue text-grey-900 px-3 py-1 rounded-lg hover:bg-blue/80 transition-all duration-200 grow mr-2 text-lg font-bold"
               >
                 EDITAR
               </button>
-              <button className="bg-red text-white/80 px-3 py-2 rounded-lg hover:bg-red/80 transition-all duration-200 grow mx-2 text-lg font-bold">
+              <button className="bg-red text-white/80 px-3 py-2 rounded-lg hover:bg-red/80 transition-all duration-200 grow ml-2 text-lg font-bold">
                 EXCLUIR
               </button>
             </div>
