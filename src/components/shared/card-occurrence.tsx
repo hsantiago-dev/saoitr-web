@@ -1,4 +1,4 @@
-import { Occurrence } from "@/@core/domain/entities/occurrence";
+import Image from "next/image";
 
 interface CardOccurrenceProps {
   id: number;
@@ -32,6 +32,35 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
         .card:hover {
           box-shadow: 0px 0px 1px 1px rgba(255, 155, 133, 0.30);
         }
+
+        .loader {
+          width: 20px;
+          height: 20px;
+          position: relative;
+          transform: rotate(45deg);
+        }
+        
+        .loader:before,
+        .loader:after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50% 50% 0 50%;
+          background: #0000;
+          background-image: radial-gradient(circle 11.2px at 50% 50%,#0000 20%, #ff4747);
+        }
+        
+        .loader:after {
+          animation: pulse-ytk0dhmd 1s infinite;
+          transform: perspective(336px) translateZ(0px);
+        }
+        
+        @keyframes pulse-ytk0dhmd {
+          to {
+            transform: perspective(336px) translateZ(168px);
+            opacity: 0;
+          }
+        }        
       `}</style>
       <div className="card">
         <div className="bg-grey-900 px-5 py-6 rounded-lg border-2 border-grey-900 border-b-grey-800 card2" key={id}>
@@ -47,15 +76,27 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
             </span>
           </div>
           <div className="flex mt-3 justify-between text-lg">
-            <span>
-              {local}
-            </span>
+            <div className="flex">
+              <div className="loader mr-4"></div>
+              <span>
+                {local}
+              </span>
+            </div>
             <span>
               Próximo ao KM {km}
             </span>
           </div>
+          <div className="rounded-lg w-full overflow-hidden mt-3 h-11">
+            <Image 
+              unoptimized 
+              src="/imgs/google-maps.png"
+              width={700}
+              height={100}
+              alt="Google Maps"
+            />
+          </div>
           {editable && (
-            <div className="flex mt-3 justify-space-around">
+            <div className="flex mt-5 justify-space-around">
               <button 
                 className="bg-blue text-grey-900 px-3 py-1 rounded-lg hover:bg-blue/80 transition-all duration-200 grow mr-2 text-lg font-bold"
               >

@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { UserContext } from "@/context/user.provider";
+import Image from "next/image";
 
 const schema = yup
   .object()
@@ -147,6 +148,15 @@ export default function ModalNewOccurrence({ eventRefreshOccurrences } : ModalNe
                   className="rounded px-6 w-full flex flex-col space-y-3"
                   onSubmit={handleSubmit(createNewOccurrence)}  
                 >
+                  <div className="rounded-lg w-full overflow-hidden h-11">
+                    <Image 
+                      unoptimized 
+                      src="/imgs/google-maps.png"
+                      width={700}
+                      height={100}
+                      alt="Google Maps"
+                    />
+                  </div>
                   <Select 
                     title="Tipo de ocorrência"
                     options={
@@ -190,9 +200,6 @@ export default function ModalNewOccurrence({ eventRefreshOccurrences } : ModalNe
                       register={register('time')}
                       error={errors.date?.message as string | undefined}
                     />
-                  </div>
-                  <div className="grid grid-cols-2">
-                    
                   </div>
                   <button
                     type="submit" 
