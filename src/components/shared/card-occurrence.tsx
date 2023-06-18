@@ -7,9 +7,10 @@ interface CardOccurrenceProps {
   local: string;
   km: number;
   editable?: boolean;
+  onEdit?: any;
 }
 
-export default function CardOccurrence({ id, occurrenceType, registered_at, local, km, editable }: CardOccurrenceProps) {
+export default function CardOccurrence({ id, occurrenceType, registered_at, local, km, editable, onEdit }: CardOccurrenceProps) {
   return (
     <>
       <style jsx>{`
@@ -98,6 +99,7 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
           {editable && (
             <div className="flex mt-5 justify-space-around">
               <button 
+                onClick={onEdit}
                 className="bg-blue text-grey-900 px-3 py-1 rounded-lg hover:bg-blue/80 transition-all duration-200 grow mr-2 text-lg font-bold"
               >
                 EDITAR

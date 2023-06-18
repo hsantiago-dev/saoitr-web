@@ -3,15 +3,18 @@ import { GetAllOccurrencesUseCase } from "@/@core/app/occurrence/get-all-occurre
 import { Occurrence } from "@/@core/domain/entities/occurrence";
 import { Registry, container } from "@/@core/infra/container-registry";
 import Header from "@/components/header";
+import ModalEditOccurrence from "@/components/modal-edit-occurrence";
 import ModalNewOccurrence from "@/components/modal-new-occurrence";
 import CardOccurrence from "@/components/shared/card-occurrence";
 import { UserContext } from "@/context/user.provider";
 import { useContext, useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
 export default function MyOccurrences() {
 
   const [ occurrences, setOccurrences ] = useState<Occurrence[]>([]);
   const userContext = useContext(UserContext);
+  const [ showModalEdit, setShowModalEdit ] = useState<boolean>(false);
 
   useEffect(() => {
     getOccurrences();
@@ -45,9 +48,23 @@ export default function MyOccurrences() {
               local={occurrence.local}
               km={occurrence.km}
               editable={true}
+              onEdit={() => {
+                setShowModalEdit(true);
+              }}
             />
           ))}
         </div>
+        { showModalEdit ? (
+          <>
+            <ModalEditOccurrence 
+              occurrence={occurrences[0]}
+              closeModal={() => {
+                setShowModalEdit(false);
+              }}
+              eventRefreshOccurrences={function eventRefreshOccurrences() { getOccurrences() }}
+            />
+          </>
+        ) : null }
         <div className="flex justify-end px-10 py-5">
           { userContext.user?.name ? ( <ModalNewOccurrence eventRefreshOccurrences={function eventRefreshOccurrences() { getOccurrences() }} /> ) : null }
         </div>
