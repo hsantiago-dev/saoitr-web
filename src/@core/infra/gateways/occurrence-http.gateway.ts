@@ -100,6 +100,9 @@ export class OccurrenceHttpGateway implements OccurrenceGateway {
 
     async delete(id: number): Promise<void> {
 
-        throw new Error("Method not implemented.");
+        return await this.http.delete(`/occurrences/${id}`, this.returnAuthorizationConfig())
+        .then(res => {
+            return;
+        });
     }
 }

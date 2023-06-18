@@ -1,3 +1,4 @@
+import { DeleteOccurrenceUseCase } from "@/@core/app/occurrence/delete-occurrence.usecase";
 import { GetAllOccurrencesByUserUseCase } from "@/@core/app/occurrence/get-all-occurrences-by-user.usecase";
 import { GetAllOccurrencesUseCase } from "@/@core/app/occurrence/get-all-occurrences.usecase";
 import { Occurrence } from "@/@core/domain/entities/occurrence";
@@ -35,6 +36,19 @@ export default function MyOccurrences() {
     }
   }
 
+  const deleteOccurrence = async (id: number) => {
+
+    const useCase = container.get<DeleteOccurrenceUseCase>(Registry.DeleteOccurrenceUseCase);  
+
+    try {
+
+      await useCase.execute(id);
+      getOccurrences();
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="flex h-screen flex-col items-start justify-center bg-grey-900 p-10">
       <Header page="/my-occurrences" />
@@ -53,6 +67,9 @@ export default function MyOccurrences() {
                 onEdit={() => {
                   setOccurrenceToEdit(occurrence);
                   setShowModalEdit(true);
+                }}
+                onDelete={() => {
+                  deleteOccurrence(occurrence.id!);
                 }}
               />
             ))}

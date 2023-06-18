@@ -8,9 +8,10 @@ interface CardOccurrenceProps {
   km: number;
   editable?: boolean;
   onEdit?: any;
+  onDelete?: any;
 }
 
-export default function CardOccurrence({ id, occurrenceType, registered_at, local, km, editable, onEdit }: CardOccurrenceProps) {
+export default function CardOccurrence({ id, occurrenceType, registered_at, local, km, editable, onEdit, onDelete}: CardOccurrenceProps) {
   return (
     <>
       <style jsx>{`
@@ -104,7 +105,10 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
               >
                 EDITAR
               </button>
-              <button className="bg-red text-white/80 px-3 py-2 rounded-lg hover:bg-red/80 transition-all duration-200 grow ml-2 text-lg font-bold">
+              <button 
+                onClick={onDelete}
+                className="bg-red text-white/80 px-3 py-2 rounded-lg hover:bg-red/80 transition-all duration-200 grow ml-2 text-lg font-bold"
+              >
                 EXCLUIR
               </button>
             </div>
