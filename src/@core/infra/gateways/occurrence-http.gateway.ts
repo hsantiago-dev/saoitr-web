@@ -42,7 +42,26 @@ export class OccurrenceHttpGateway implements OccurrenceGateway {
 
     async update(id: number, data: Occurrence): Promise<Occurrence> {
             
-        throw new Error("Method not implemented.");
+        const body: any = {
+            registered_at: data.registered_at
+            , local: data.local
+            , occurrence_type: data.occurrenceType
+            , km: data.km
+            , user_id: data.userId
+        }
+
+        return await this.http.put<any>(`/occurrences/${id}`, body, this.returnAuthorizationConfig())
+        .then(res => {
+
+            return new Occurrence({
+                id: res.data.id
+                , registered_at: res.data.registered_at
+                , local: res.data.local
+                , occurrenceType: res.data.occurrence_type
+                , km: res.data.km
+                , userId: res.data.user_id 
+            });
+        });
     }
 
     async getAll(): Promise<Occurrence[]> {

@@ -11,6 +11,7 @@ import { GetAllOccurrencesUseCase } from "../app/occurrence/get-all-occurrences.
 import { EditUserUseCase } from "../app/user/edit-user.usecase";
 import { CreateNewOccurrenceUseCase } from "../app/occurrence/create-new-occurrence.usecase";
 import { GetAllOccurrencesByUserUseCase } from "../app/occurrence/get-all-occurrences-by-user.usecase";
+import { EditOccurrenceUseCase } from "../app/occurrence/edit-occurrence.usecase";
 
 export const Registry = {
     AxiosAdapter: Symbol.for('AxiosAdapter'),
@@ -26,6 +27,7 @@ export const Registry = {
     GetAllOccurrencesUseCase: Symbol.for('GetAllOccurrencesUseCase'),
     CreateNewOccurrenceUseCase: Symbol.for('CreateNewOccurrenceUseCase'),
     GetAllOccurrencesByUserUseCase: Symbol.for('GetAllOccurrencesByUserUseCase'),
+    EditOccurrenceUseCase: Symbol.for('EditOccurrenceUseCase'),
 }
 
 export const container = new Container();
@@ -68,4 +70,8 @@ container.bind(Registry.CreateNewOccurrenceUseCase).toDynamicValue((context) => 
 
 container.bind(Registry.GetAllOccurrencesByUserUseCase).toDynamicValue((context) => {
     return new GetAllOccurrencesByUserUseCase(context.container.get(Registry.OccurrenceGateway));
+});
+
+container.bind(Registry.EditOccurrenceUseCase).toDynamicValue((context) => {
+    return new EditOccurrenceUseCase(context.container.get(Registry.OccurrenceGateway));
 });

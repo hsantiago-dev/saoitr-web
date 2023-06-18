@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { UserContext } from "@/context/user.provider";
 import Image from "next/image";
+import { EditOccurrenceUseCase } from "@/@core/app/occurrence/edit-occurrence.usecase";
 
 const schema = yup
   .object()
@@ -40,26 +41,26 @@ export default function ModalEditOccurrence({ occurrence, closeModal, eventRefre
   const userContext = useContext(UserContext);
 
   useEffect(() => {
-    setValue('local', occurrence.local);
-    setValue('occurrence_type', occurrence.occurrenceType);
-    setValue('km', occurrence.km);
-    setValue('date', occurrence.registered_at.split('T')[0]);
-    setValue('time', occurrence.registered_at.split('T')[1].split('.')[0]);
+    setValues();
   }, []);
 
   useEffect(() => {
+    setValues();
+  }, [occurrence]);
+
+  const setValues = () => {
     setValue('local', occurrence.local);
     setValue('occurrence_type', occurrence.occurrenceType);
     setValue('km', occurrence.km);
     setValue('date', occurrence.registered_at.split('T')[0]);
-    setValue('time', occurrence.registered_at.split('T')[1].split('.')[0]);
-  }, [occurrence]);
+    setValue('time', occurrence.registered_at.split('T')[1].substring(0, 5));
+  }
 
   const editOccurrence = async (data: any) => {
 
-    const useCase = container.get<CreateNewOccurrenceUseCase>(Registry.CreateNewOccurrenceUseCase);
+    const useCase = container.get<EditOccurrenceUseCase>(Registry.EditOccurrenceUseCase);
 
-    const occurrence = new Occurrence({
+    const body = new Occurrence({
       registered_at: data.date + 'T' + data.time + ':00.000Z',
       local: data.local,
       occurrenceType: data.occurrence_type,
@@ -69,14 +70,16 @@ export default function ModalEditOccurrence({ occurrence, closeModal, eventRefre
 
     try {
 
-      const result = await useCase.execute(occurrence);
+      const result = await useCase.execute(occurrence.id!, body);
 
-      showToastNotification('Ocorrência registrada com sucesso!', 'success');
-      setValue('local', '');
-      setValue('occurrence_type', '');
-      setValue('km', 1);
-      setValue('date', '');
-      setValue('time', '');
+      console.log(result);
+
+      showToastNotification('Ocorrência alterada com sucesso!', 'success');
+      // setValue('local', '');
+      // setValue('occurrence_type', '');
+      // setValue('km', 1);
+      // setValue('date', '');
+      // setValue('time', '');
       closeModal();
       eventRefreshOccurrences();
     } catch (error: any) {
@@ -95,7 +98,7 @@ export default function ModalEditOccurrence({ occurrence, closeModal, eventRefre
             <div className="relative w-3/6 my-6 mx-auto max-w-3xl">
               <div className="rounded-lg shadow-lg relative flex flex-col w-full bg-grey-700 outline-none focus:outline-none py-6">
                 <div className="flex items-start justify-between px-6 pb-5">
-                  <h3 className="text-3xl font-semibold">Ocorrência <span className="text-redLight">#{occurrence.id}</span></h3>
+                  <h3 className="text-3xl font-semibold">Ocorrência <span className="text-redLight">#{occurrence.id ? occurrence.id : ''}</span></h3>
                   <button
                     className="float-right text-red"
                     onClick={() => closeModal()}
@@ -107,7 +110,7 @@ export default function ModalEditOccurrence({ occurrence, closeModal, eventRefre
                 </div>
                 <form 
                   className="rounded px-6 w-full flex flex-col space-y-3"
-                  onSubmit={handleSubmit(() => {})}  
+                  onSubmit={handleSubmit(editOccurrence)}  
                 >
                   <div className="rounded-lg w-full overflow-hidden h-11">
                     <Image 
