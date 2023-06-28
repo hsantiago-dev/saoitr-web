@@ -75,11 +75,6 @@ export default function ModalEditOccurrence({ occurrence, closeModal, eventRefre
       console.log(result);
 
       showToastNotification('Ocorrência alterada com sucesso!', 'success');
-      // setValue('local', '');
-      // setValue('occurrence_type', '');
-      // setValue('km', 1);
-      // setValue('date', '');
-      // setValue('time', '');
       closeModal();
       eventRefreshOccurrences();
     } catch (error: any) {

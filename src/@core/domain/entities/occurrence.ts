@@ -33,8 +33,6 @@ export class Occurrence extends Entity {
             throw new Error("Occurrence Type is required");
         } else if (!data.km) {
             throw new Error("Km is required");
-        } else if (!data.userId) {
-            throw new Error("ContributorID is required");
-        } 
+        }
     }
 }

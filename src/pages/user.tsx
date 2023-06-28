@@ -3,6 +3,7 @@ import EditableField from '@/components/shared/editable_field';
 import { useRouter } from 'next/router';
 import ModalChangePassword from '@/components/shared/modal-change-password';
 import { UserContext } from '@/context/user.provider';
+import ModalDestroyProfile from '@/components/modal-destroy-profile';
 
 export default function User() {
   const userContext = useContext(UserContext);
@@ -49,6 +50,7 @@ export default function User() {
                 value={userContext.user?.email}
               />
               <ModalChangePassword />
+              <ModalDestroyProfile />
             </div>
         </div>
         </div>

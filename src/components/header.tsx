@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { Registry, container } from "@/@core/infra/container-registry";
 import { SignOutUseCase } from "@/@core/app/user/sign-out.usecase";
+import { useRouter } from "next/router";
 
 type HeaderProps = {
     page: string;
@@ -12,13 +13,21 @@ export default function Header({ page }: HeaderProps) {
     const userContext = useContext(UserContext);
     let button;
     const userLogged = userContext.user && userContext.user.name;
+    const router = useRouter();
 
     const signOut = () => {
 
-        const useCase = container.get<SignOutUseCase>(Registry.SignOutUseCase);
-        useCase.execute(userContext.user?.id!);
+        try {
 
-        userContext.setUser(null);
+            const useCase = container.get<SignOutUseCase>(Registry.SignOutUseCase);
+
+            useCase.execute(userContext.user?.id!);
+
+            userContext.setUser(null);
+            router.push('/');
+        } catch (error) {
+            console.error(error);
+        }
     }
     
     if (userLogged) {

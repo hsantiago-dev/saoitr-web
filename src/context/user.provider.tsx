@@ -18,14 +18,21 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
     useEffect(() => {
 
-        const obj = localStorage.getItem("user") || '{}';
+        const obj = localStorage.getItem("user");
 
-        setUser(JSON.parse(obj));
+        if (obj)
+            setUser(JSON.parse(obj));
+        else {
+            setUser(null);
+            localStorage.setItem("user", '{}');
+        }
     }, []);
 
     useEffect(() => {
         if (user)
             localStorage.setItem("user", JSON.stringify(user));
+        else
+            localStorage.setItem("user", '{}');
     }, [user]);
 
     return (

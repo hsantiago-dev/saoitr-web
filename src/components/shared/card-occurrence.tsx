@@ -12,6 +12,17 @@ interface CardOccurrenceProps {
 }
 
 export default function CardOccurrence({ id, occurrenceType, registered_at, local, km, editable, onEdit, onDelete}: CardOccurrenceProps) {
+
+  const dataFormatada = () => {
+
+    let date: string = registered_at.split('T')[0];
+    let time: string = registered_at.split('T')[1].substring(0, 5);
+
+    date = date.split('-')[2] + '/' + date.split('-')[1] + '/' + date.split('-')[0];
+
+    return date + ' ' + time;
+  }
+
   return (
     <>
       <style jsx>{`
@@ -74,7 +85,7 @@ export default function CardOccurrence({ id, occurrenceType, registered_at, loca
               #{id}
             </span>
             <span>
-              {registered_at}
+              {dataFormatada()}
             </span>
           </div>
           <div className="flex mt-3 justify-between text-lg">
